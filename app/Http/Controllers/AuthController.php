@@ -52,20 +52,19 @@ class AuthController extends Controller
 
     public function proses_register(Request $request)
     {
-
         $request->validate([
             'name' => 'required',
             'username' => 'required|alpha_num|min:5|max:15|unique:users,username',
             'email' => 'required|email',
             'no_WA' => 'required',
             'password' => 'required|min:6|max:10'
-        ],[
-            'username.min'=>'Username minimal 5 karakter',
-            'username.max'=>'Username maksimal 15 karakter',
-            'username.alpha_num'=>'Username hanya bisa angka dan huruf',
-            'username.unique'=>'Username sudah di gunakan',
-            'password.min'=>'Minimal Password 6 Karakter',
-            'password.max'=>'Maksimal Password 10 Karakter',
+        ], [
+            'username.min' => 'Username minimal 5 karakter',
+            'username.max' => 'Username maksimal 15 karakter',
+            'username.alpha_num' => 'Username hanya bisa angka dan huruf',
+            'username.unique' => 'Username sudah di gunakan',
+            'password.min' => 'Minimal Password 6 Karakter',
+            'password.max' => 'Maksimal Password 10 Karakter',
         ]);
 
         $request['level'] = 'user';
@@ -74,7 +73,7 @@ class AuthController extends Controller
 
         User::create($request->all());
 
-        return redirect()->route('login');
+        return redirect()->route('login')->with('success', 'Registrasi berhasil! Silakan login.');
     }
 
     public function logout(Request $request)

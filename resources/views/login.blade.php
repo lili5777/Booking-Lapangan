@@ -1,67 +1,230 @@
-@extends('user.component.master')
-@section('judul', 'Login')
-@section('konten')
-<div class="w-full min-h-screen bg-[#637E76] flex items-center justify-center p-4">
-    <div class="bg-[#F8DFD4] w-full max-w-4xl rounded-xl shadow-2xl overflow-hidden grid grid-cols-2">
-        <!-- Left Column: Decorative Section -->
-        <div class="bg-[#637E76] text-[#F8DFD4] flex flex-col items-center justify-center p-12 space-y-6 text-center">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-32 w-32 text-[#C69774]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
-            </svg>
-            <h2 class="text-3xl font-bold">Selamat Datang Kembali</h2>
-            <p class="text-sm">Masuk untuk melanjutkan perjalanan Anda</p>
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - BookingLap</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#F75270',
+                        secondary: '#4A90E2',
+                        accent: '#FFD93D',
+                        dark: '#2C3E50'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="font-sans antialiased">
+    <!-- Login Section -->
+    <section class="min-h-screen bg-primary flex items-center justify-center relative overflow-hidden p-4">
+        <!-- Simple Background -->
+        <div class="absolute top-0 left-0 w-full h-full overflow-hidden opacity-10">
+            <div class="absolute top-20 left-10 w-20 h-20 bg-white rounded-full"></div>
+            <div class="absolute top-40 right-20 w-32 h-32 bg-white rounded-full"></div>
+            <div class="absolute bottom-20 left-20 w-24 h-24 bg-white rounded-full"></div>
+            <div class="absolute bottom-40 right-10 w-16 h-16 bg-white rounded-full"></div>
         </div>
 
-        <!-- Right Column: Login Form -->
-        <div class="p-10 flex flex-col justify-center space-y-6">
-            <h1 class="text-center font-bold text-4xl text-[#637E76] mb-6">Login</h1>
+        <div class="container mx-auto relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
+                <!-- Left Content -->
+                <div class="text-white text-center lg:text-left hidden lg:block">
+                    <div class="inline-block bg-white/20 backdrop-blur-sm rounded-full px-6 py-2 mb-6">
+                        <span class="text-sm font-semibold">🏸 Platform Booking Terpercaya</span>
+                    </div>
 
-            @error('gagalpesan')
-                <p class="text-red-500 text-sm text-center bg-red-100 p-2 rounded">{{ $message }}</p>
-            @enderror
-            @error('login_gagal')
-                <p class="text-red-500 text-sm text-center bg-red-100 p-2 rounded">{{ $message }}</p>
-            @enderror
+                    <h1 class="text-5xl lg:text-6xl font-black mb-6 leading-tight">
+                        Selamat<br>
+                        <span class="text-accent">Datang!</span>
+                    </h1>
 
-            <form action="{{ route('proses_login') }}" method="POST" id="logForm" class="space-y-4">
-                @csrf
+                    <p class="text-xl mb-8 opacity-90">
+                        Masuk ke akun Anda dan nikmati kemudahan booking
+                    </p>
 
-                <div class="space-y-2">
-                    <label for="username" class="block text-gray-700 text-sm font-semibold">Username</label>
-                    <input
-                        class="w-full px-4 py-3 rounded-lg border {{ $errors->has('username') ? 'border-red-500' : 'border-gray-300' }} focus:outline-none focus:ring-2 focus:ring-[#C69774] transition duration-300"
-                        type="text" name="username" id="username"
-                        placeholder="Masukkan username"
-                        value="{{ old('username') }}"
-                        required>
-                    @error('username')
-                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                    @enderror
+                    <div class="flex gap-6">
+                        <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-4 min-w-[110px]">
+                            <div class="text-3xl font-black">50+</div>
+                            <div class="text-sm opacity-90">Lapangan</div>
+                        </div>
+                        <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-4 min-w-[110px]">
+                            <div class="text-3xl font-black">5K+</div>
+                            <div class="text-sm opacity-90">Pengguna</div>
+                        </div>
+                        <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-4 min-w-[110px]">
+                            <div class="text-3xl font-black">4.9</div>
+                            <div class="text-sm opacity-90">Rating</div>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="space-y-2">
-                    <label for="password" class="block text-gray-700 text-sm font-semibold">Password</label>
-                    <input
-                        class="w-full px-4 py-3 rounded-lg border {{ $errors->has('password') ? 'border-red-500' : 'border-gray-300' }} focus:outline-none focus:ring-2 focus:ring-[#C69774] transition duration-300"
-                        type="password" name="password" id="password"
-                        placeholder="Masukkan password"
-                        required>
-                    @error('password')
-                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                    @enderror
-                </div>
-                <button type="submit"
-                    class="w-full bg-[#C69774] text-[#F8DFD4] py-3 rounded-lg font-semibold
-                           hover:bg-[#637E76] transition duration-300 ease-in-out transform
-                           hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-[#637E76]">
-                    Masuk
-                </button>
-            </form>
+                <!-- Login Form -->
+                <div
+                    class="glass-effect backdrop-blur-lg rounded-3xl p-6 md:p-8 shadow-2xl border border-white/20 max-w-md mx-auto w-full">
+                    <!-- Logo -->
+                    <div class="text-center mb-6">
+                        <div
+                            class="w-14 h-14 bg-white rounded-full flex items-center justify-center text-primary font-bold text-xl shadow-lg mx-auto mb-3">
+                            <i class="fas fa-sign-in-alt"></i>
+                        </div>
+                        <h2 class="text-2xl font-black text-white mb-1">Masuk</h2>
+                        <p class="text-white/70 text-sm">Selamat datang kembali</p>
+                    </div>
 
-            <div class="text-center text-sm text-gray-600 mt-4">
-                Belum punya akun? <a href="{{ route('register') }}" class="text-[#C69774] hover:underline">Daftar Sekarang</a>
+                    <form action="{{ route('proses_login') }}" method="POST" class="space-y-4">
+                        @csrf
+
+                        <!-- Error dari Server -->
+                        @if($errors->any())
+                            <div class="bg-red-500/20 border border-red-500 text-white px-3 py-2 rounded-lg text-sm">
+                                <div class="flex items-center gap-2">
+                                    <i class="fas fa-exclamation-circle text-xs"></i>
+                                    <span>{{ $errors->first('login_gagal') }}</span>
+                                </div>
+                            </div>
+                        @endif
+
+                        @if(session('success'))
+                            <div class="bg-green-500/20 border border-green-500 text-white px-3 py-2 rounded-lg text-sm">
+                                <div class="flex items-center gap-2">
+                                    <i class="fas fa-check-circle text-xs"></i>
+                                    <span>{{ session('success') }}</span>
+                                </div>
+                            </div>
+                        @endif
+
+                        <!-- Username Input -->
+                        <div class="space-y-1.5">
+                            <label class="text-white font-semibold block text-xs">Username</label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <i class="fas fa-user text-gray-400 text-sm"></i>
+                                </div>
+                                <input type="text" name="username" value="{{ old('username') }}" required
+                                    class="w-full bg-white border-2 border-gray-200 rounded-lg pl-10 pr-3 py-2.5 text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-white focus:border-white transition-all"
+                                    placeholder="Masukkan username">
+                            </div>
+                            @error('username')
+                                <p class="text-red-300 text-xs">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <!-- Password Input -->
+                        <div class="space-y-1.5">
+                            <label class="text-white font-semibold block text-xs">Password</label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <i class="fas fa-lock text-gray-400 text-sm"></i>
+                                </div>
+                                <input type="password" name="password" required
+                                    class="w-full bg-white border-2 border-gray-200 rounded-lg pl-10 pr-10 py-2.5 text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-white focus:border-white transition-all"
+                                    placeholder="Masukkan password">
+                                <button type="button"
+                                    class="absolute inset-y-0 right-0 pr-3 flex items-center toggle-password">
+                                    <i
+                                        class="fas fa-eye text-gray-400 hover:text-gray-600 transition-colors text-sm"></i>
+                                </button>
+                            </div>
+                            @error('password')
+                                <p class="text-red-300 text-xs">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <!-- Submit Button -->
+                        <button type="submit"
+                            class="w-full bg-white text-primary py-3 rounded-lg font-bold text-base hover:bg-gray-100 transition-all duration-300 hover:-translate-y-1 shadow-lg flex items-center justify-center gap-2">
+                            <span>Masuk</span>
+                            <i class="fas fa-sign-in-alt text-sm"></i>
+                        </button>
+                    </form>
+
+                    <!-- Register Link -->
+                    <div class="text-center mt-4">
+                        <p class="text-white/80 text-xs">
+                            Belum punya akun?
+                            <a href="{{ route('register') }}"
+                                class="text-accent hover:text-yellow-300 font-semibold ml-1">
+                                Daftar sekarang
+                            </a>
+                        </p>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-</div>
-@endsection
+    </section>
+
+    <script>
+        // Toggle Password Visibility
+        document.querySelectorAll('.toggle-password').forEach(button => {
+            button.addEventListener('click', function () {
+                const input = this.closest('.relative').querySelector('input');
+                const icon = this.querySelector('i');
+
+                if (input.type === 'password') {
+                    input.type = 'text';
+                    icon.classList.remove('fa-eye');
+                    icon.classList.add('fa-eye-slash');
+                } else {
+                    input.type = 'password';
+                    icon.classList.remove('fa-eye-slash');
+                    icon.classList.add('fa-eye');
+                }
+            });
+        });
+
+        // Input focus effects
+        document.querySelectorAll('input').forEach(input => {
+            input.addEventListener('focus', function () {
+                this.parentElement.classList.add('ring-2', 'ring-white');
+            });
+
+            input.addEventListener('blur', function () {
+                this.parentElement.classList.remove('ring-2', 'ring-white');
+            });
+        });
+    </script>
+
+    <style>
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        input {
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        input::placeholder {
+            color: #9CA3AF;
+            font-weight: 400;
+        }
+
+        input:focus {
+            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.2);
+        }
+
+        button:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        input,
+        button,
+        a {
+            transition: all 0.3s ease;
+        }
+    </style>
+</body>
+
+</html>

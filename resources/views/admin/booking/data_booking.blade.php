@@ -112,7 +112,8 @@
                         </form>
 
                         <!-- Form Mingguan -->
-                        <form action="{{ route('admin_booking') }}" method="GET" class="mt-4 hidden" id="form-mingguan">
+                        <form action="{{ route('admin_booking') }}" method="GET" class="mt-4 hidden"
+                            id="form-mingguan">
                             <label for="weekly_start" class="block font-semibold">Tanggal Mulai:</label>
                             <input type="date" name="weekly_start" class="border p-2 rounded w-full" required>
                             <label for="weekly_end" class="block mt-2 font-semibold">Tanggal Selesai:</label>
@@ -124,7 +125,8 @@
                         </form>
 
                         <!-- Form Bulanan -->
-                        <form action="{{ route('admin_booking') }}" method="GET" class="mt-4 hidden" id="form-bulanan">
+                        <form action="{{ route('admin_booking') }}" method="GET" class="mt-4 hidden"
+                            id="form-bulanan">
                             <label for="monthly_month" class="block font-semibold">Pilih Bulan:</label>
                             <select name="monthly_month" class="border p-2 rounded w-full" required>
                                 @for ($i = 1; $i <= 12; $i++)
@@ -142,7 +144,8 @@
                         </form>
 
                         <!-- Form Tahunan -->
-                        <form action="{{ route('admin_booking') }}" method="GET" class="mt-4 hidden" id="form-tahunan">
+                        <form action="{{ route('admin_booking') }}" method="GET" class="mt-4 hidden"
+                            id="form-tahunan">
                             <label for="yearly_year" class="block font-semibold">Tahun:</label>
                             <input type="number" name="yearly_year" class="border p-2 rounded w-full"
                                 placeholder="Masukkan Tahun" required>
@@ -164,6 +167,7 @@
                         <th class="border-gray-700 border">Nama</th>
                         <th class="border-gray-700 border">Tgl Booking</th>
                         <th class="border-gray-700 border">Lapangan</th>
+                        <th class="border-gray-700 border">Kategori</th>
                         <th class="border-gray-700 border">Mulai</th>
                         <th class="border-gray-700 border">Selesai</th>
                         <th class="border-gray-700 border">Status</th>
@@ -174,10 +178,14 @@
                         @forelse ($bookings as $index => $d)
                             <tr>
                                 <td class="border-gray-700 border">{{ $index + 1 }}</td>
-                                <td class="border-gray-700 border">{{ $user->where('id', $d->id_user)->first()->name }}</td>
+                                <td class="border-gray-700 border">{{ $user->where('id', $d->id_user)->first()->name }}
+                                </td>
                                 <td class="border-gray-700 border">{{ $d->tgl_booking_222142 }}</td>
                                 <td class="border-gray-700 border">
                                     {{ $lapangan->where('id', $d->id_lapangan)->first()->urutan_222142 }}</td>
+                                <td class="border-gray-700 border">
+                                    {{ $kategori->where('id', $lapangan->where('id', $d->id_lapangan)->first()->id_kategori)->first()->name_222142 }}
+                                </td>
                                 <td class="border-gray-700 border">{{ $d->jam_mulai_222142 }}</td>
                                 <td class="border-gray-700 border">{{ $d->jam_selesai_222142 }}</td>
                                 <td class="border-gray-700 border">{{ $d->status_222142 }}</td>
@@ -191,7 +199,7 @@
                                     </form>
                                 </td>
                             </tr>
-                            @empty
+                        @empty
                             <tr>
                                 <td colspan="8" style="text-align: center;">Tidak ada data</td>
                             </tr>
@@ -244,6 +252,5 @@
                 });
             });
         });
-
     </script>
 @endsection

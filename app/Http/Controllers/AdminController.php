@@ -251,6 +251,7 @@ class AdminController extends Controller
         $user = User::all();
         $lapangan = lapangan::all();
         $bookings = collect();
+        $kategori = kategori::all();
 
         if ($request->has('daily_date')) {
             // Filter Harian
@@ -280,7 +281,7 @@ class AdminController extends Controller
             $bookings = Booking::all();
         }
 
-        return view('admin.booking.data_booking', compact('bookings', 'user', 'lapangan'));
+        return view('admin.booking.data_booking', compact('bookings', 'user', 'lapangan','kategori'));
     }
     public function tambah_booking()
     {

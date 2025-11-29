@@ -1,8 +1,7 @@
-@extends('user.component.master')
+@extends('user.component.master2')
 @section('judul')
 @section('konten')
 <div class="flex bg-[#F8DFD4]">
-    @include('admin.component.sidebar')
     <div class="w-full">
         <div class=" place-items-center grid mb-16">
             <img src="{{asset('images/badminton_logo_-_Dibuat_dengan_PosterMyWall__1_-removebg-preview.png')}}" alt="" class="w-72 h-72">

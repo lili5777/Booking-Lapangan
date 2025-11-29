@@ -1,31 +1,83 @@
-<div class="w-full bg-[#637E76] flex justify-around py-4 place-items-center shadow-2xl sticky top-0 z-50">
-    <div class="flex place-items-center font-semibold gap-2">
-        <img src="{{ asset('images/24fc9417-bbdd-4268-ad15-4874be8f411e.png') }}" alt="" class="w-12">
-        <p class="font-sans text-2xl text-white hover:text-[#C69774]">Fikri Haikal</p>
-    </div>
-    <div class="gap-20 flex text-white font-bold">
-        <div class="hover:text-[#C69774] transition delay-150 duration-200 ease-in-out"><a
-                href="{{ route('user') }}">Beranda</a></div>
-        <div class="hover:text-[#C69774] transition delay-150 duration-200 ease-in-out"><a
-                href="{{ route('lapangan') }}">Lapangan</a></div>
-        <div class="hover:text-[#C69774] transition delay-150 duration-200 ease-in-out"><a
-                href="{{ route('kontak') }}">Kontak</a></div>
-        <div class="hover:text-[#C69774] transition delay-150 duration-200 ease-in-out"><a
-                href="{{ route('riwayat') }}">Riwayat</a></div>
-    </div>
-    <div class="">
-        @if (auth()->check())
-            <a href="{{ route('logout') }}">
-                <div
-                    class="bg-[#C69774] px-10 py-2 text-white font-bold rounded-lg hover:text-[#637E76] hover:bg-[#F8DFD4] transition delay-150 duration-200 ease-in-out">
-                    Logout</div>
+<nav id="navbar" class="fixed w-full z-50 transition-all duration-500 py-4">
+    <div class="container mx-auto px-4 flex justify-between items-center">
+        <a href="{{ route('user') }}" class="flex items-center space-x-2 text-white font-bold text-xl">
+            <div
+                class="w-10 h-10 bg-white rounded-full flex items-center justify-center text-primary font-bold shadow-lg btn-glow">
+                <i class="fas fa-feather-alt"></i>
+            </div>
+            <span>BookingLap</span>
+        </a>
+
+        <div class="hidden md:flex space-x-8">
+            <a href="{{ route('user') }}"
+                class="text-white hover:text-accent transition-all duration-300 font-medium relative group">
+                Beranda
+                <span
+                    class="absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span>
             </a>
-        @else
-            <a href="{{ route('login') }}">
-                <div
-                    class="bg-[#C69774] px-10 py-2 text-white font-bold rounded-lg hover:text-[#637E76] hover:bg-[#F8DFD4] transition delay-150 duration-200 ease-in-out">
-                    Login</div>
+            <a href="{{ route('lapangan') }}"
+                class="text-white hover:text-accent transition-all duration-300 font-medium relative group">
+                Lapangan
+                <span
+                    class="absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span>
             </a>
-        @endif
+            <a href="{{ route('kontak') }}"
+                class="text-white hover:text-accent transition-all duration-300 font-medium relative group">
+                Kontak
+                <span
+                    class="absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span>
+            </a>
+            <a href="{{ route('riwayat') }}"
+                class="text-white hover:text-accent transition-all duration-300 font-medium relative group">
+                Riwayat
+                <span
+                    class="absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span>
+            </a>
+        </div>
+
+        <div class="flex items-center space-x-4">
+            @if(auth()->check())
+                <div class="flex items-center space-x-2 text-white">
+                    <div
+                        class="w-8 h-8 bg-accent rounded-full flex items-center justify-center text-dark font-bold shadow-lg">
+                        {{ substr(auth()->user()->name, 0, 1) }}
+                    </div>
+                    <span class="hidden sm:block">Halo, {{ auth()->user()->name }}</span>
+                </div>
+                <a href="{{ route('logout') }}"
+                    class="bg-white text-primary px-4 py-2 rounded-full font-medium hover:bg-gray-100 transition-all duration-300 btn-glow">
+                    Logout
+                </a>
+            @else
+                <a href="{{ route('login') }}"
+                    class="bg-white text-primary px-4 py-2 rounded-full font-medium hover:bg-gray-100 transition-all duration-300 btn-glow">
+                    Login
+                </a>
+            @endif
+
+            <!-- Mobile menu button -->
+            <button id="mobile-menu-button" class="md:hidden text-white text-xl">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
     </div>
-</div>
+
+    <!-- Mobile menu -->
+    <div id="mobile-menu" class="md:hidden hidden glass-effect mt-4 rounded-xl shadow-2xl py-4 px-4 mx-4">
+        <a href="{{ route('user') }}"
+            class="block py-3 text-white hover:text-accent transition-all duration-300 border-b border-white/10">
+            <i class="fas fa-home mr-3"></i>Beranda
+        </a>
+        <a href="{{ route('lapangan') }}"
+            class="block py-3 text-white hover:text-accent transition-all duration-300 border-b border-white/10">
+            <i class="fas fa-map-marked-alt mr-3"></i>Lapangan
+        </a>
+        <a href="{{ route('kontak') }}"
+            class="block py-3 text-white hover:text-accent transition-all duration-300 border-b border-white/10">
+            <i class="fas fa-phone-alt mr-3"></i>Kontak
+        </a>
+        <a href="{{ route('riwayat') }}" class="block py-3 text-white hover:text-accent transition-all duration-300">
+            <i class="fas fa-history mr-3"></i>Riwayat
+        </a>
+    </div>
+</nav>
