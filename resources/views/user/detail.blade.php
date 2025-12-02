@@ -174,16 +174,6 @@
                                     <input type="date" name="tanggal" min="{{ now()->format('Y-m-d') }}" required
                                         class="w-full bg-white border-2 border-gray-200 rounded-xl px-4 py-3 text-dark placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-300">
                                 </div>
-                                <div>
-                                    <label class="text-dark font-semibold block text-sm mb-2">Durasi (Jam)</label>
-                                    <select name="durasi"
-                                        class="w-full bg-white border-2 border-gray-200 rounded-xl px-4 py-3 text-dark focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-300">
-                                        <option value="1">1 Jam</option>
-                                        <option value="2">2 Jam</option>
-                                        <option value="3">3 Jam</option>
-                                        <option value="4">4 Jam</option>
-                                    </select>
-                                </div>
                             </div>
 
                             <div class="flex space-x-4">

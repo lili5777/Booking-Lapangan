@@ -57,7 +57,8 @@ class UserController extends Controller
         $request->validate([
             'tanggal' => 'required|date_format:Y-m-d|after_or_equal:' . now()->format('Y-m-d'),
         ]);
-
+        $tanggal=$request->tanggal;
+        $isToday = Carbon::parse($tanggal)->isToday();
         $lapangan = lapangan::where('id', $id)->first();
         $kategori = Kategori::where('id', $lapangan->id_kategori)->first();
         // dd($request->all());
@@ -76,7 +77,7 @@ class UserController extends Controller
             $jam_buka = \Carbon\Carbon::createFromFormat('H:i:s', $operasional->jam_buka_222142)->format('H:i');
             $jam_tutup = \Carbon\Carbon::createFromFormat('H:i:s', $operasional->jam_tutup_222142)->format('H:i');
 
-            return view('user.pesan', compact('tanggal', 'jam', 'operasional', 'user', 'id', 'jam_buka', 'jam_tutup', 'kategori'));
+            return view('user.pesan', compact('tanggal', 'jam', 'operasional', 'user', 'id', 'jam_buka', 'jam_tutup', 'kategori', 'isToday','tanggal'));
         }
         return redirect('/login')
             ->withInput()
@@ -87,7 +88,7 @@ class UserController extends Controller
     public function detailpesanan(Request $request)
     {
         $request->validate([
-            'selected_times' => 'required|string', // Validasi bahwa jam terpilih harus ada
+            'selected_times' => 'required|string',
         ]);
 
         $lapangan = lapangan::where('id', $request->id_lapangan)->first();
@@ -96,21 +97,22 @@ class UserController extends Controller
 
         // Ubah string `selected_times` menjadi array
         $selectedTimes = explode(',', $request->selected_times);
-        sort($selectedTimes); // Urutkan untuk menghitung durasi
+        sort($selectedTimes); // Urutkan jam
 
-        // Validasi tambahan jika diperlukan
+        // Validasi
         if (count($selectedTimes) < 1) {
             return redirect()->back()->withErrors(['error' => 'Harap pilih setidaknya satu jam']);
         }
 
-        // Hitung durasi total (dalam jam)
-        $mulai = \Carbon\Carbon::createFromFormat('H:i', $selectedTimes[0]);
-        $selesai = \Carbon\Carbon::createFromFormat('H:i', end($selectedTimes))->addHour(); // Tambah 1 jam ke waktu terakhir
-        $totalJam = $selesai->diffInHours($mulai);
+        // PERBAIKAN: Hitung durasi berdasarkan jumlah jam yang dipilih, bukan range waktu
+        $totalJam = count($selectedTimes);
 
-        // Hitung total harga
+        // Waktu mulai dan selesai untuk display
+        $mulai = $selectedTimes[0];
+        $selesai = $selectedTimes[count($selectedTimes) - 1];
+
+        // Hitung total harga berdasarkan jumlah jam yang dipilih
         $totalHarga = $totalJam * $kategori->harga_222142;
-
 
         return view('user.detailpesanan', compact('lapangan', 'kategori', 'tgl', 'mulai', 'selesai', 'selectedTimes', 'totalJam', 'totalHarga'));
     }

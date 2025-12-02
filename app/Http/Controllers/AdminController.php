@@ -331,12 +331,37 @@ class AdminController extends Controller
             return redirect()->back()->with('error', 'Data operasional tidak ditemukan');
         }
 
+        // Ambil data user
+        $user = User::find($id_user);
+        if (!$user) {
+            return redirect()->back()->with('error', 'Data pengguna tidak ditemukan');
+        }
+
+        // Ambil data lapangan
+        $lapangan = lapangan::find($id_lapangan);
+        if (!$lapangan) {
+            return redirect()->back()->with('error', 'Data lapangan tidak ditemukan');
+        }
+
+        // Ambil data kategori untuk lapangan
+        $kategori = kategori::find($lapangan->id_kategori);
+
         // Extract booked times
         $bookedTimes = $jam->flatMap(function ($booking) {
             return [$booking->jam_mulai_222142, $booking->jam_selesai_222142];
         })->unique()->toArray();
 
-        return view('admin.booking.data_bookingjam', compact('id_user', 'operasional', 'id_lapangan', 'tgl_booking', 'jam', 'bookedTimes'));
+        return view('admin.booking.data_bookingjam', compact(
+            'id_user',
+            'operasional',
+            'id_lapangan',
+            'tgl_booking',
+            'jam',
+            'bookedTimes',
+            'user',
+            'lapangan',
+            'kategori'
+        ));
     }
 
 
